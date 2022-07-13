@@ -9,6 +9,7 @@
     <color name="black">#000000</color>
     <color name="bgBlack">#D8000000</color>
     <color name="gray_text">#8F8F8F</color>
+    <color name="yellow">#E7C61A</color>
 
     <color name="bg_info_wall" tools:ignore="MissingDefaultResource">#EBEBEB</color>
 
