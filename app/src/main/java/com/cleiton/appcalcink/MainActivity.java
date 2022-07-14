@@ -2,6 +2,7 @@ package com.cleiton.appcalcink;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -67,14 +68,60 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        int init = 0;
+
         if (v.getId() == R.id.button_add) {
-            this.mViewHolder.layout_empty.setVisibility(View.GONE);
-            this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
-            this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
+            if (init <= 3) {
+                Intent add = new Intent(this, FormWall.class);
+                startActivity(add);
+                init++;
+
+            } else if (init >= 1 && init < 4) {
+                this.mViewHolder.layout_empty.setVisibility(View.GONE);
+                this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
+                this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
+
+            }
 
         } else if (v.getId() == R.id.image_info1) {
-            this.mViewHolder.layout_info1.setVisibility(View.VISIBLE);
+            if (this.mViewHolder.layout_info1.getVisibility() == View.VISIBLE) {
+                this.mViewHolder.layout_info1.setVisibility(View.GONE);
+            } else {
+                this.mViewHolder.layout_info1.setVisibility(View.VISIBLE);
+                this.mViewHolder.layout_info2.setVisibility(View.GONE);
+                this.mViewHolder.layout_info3.setVisibility(View.GONE);
+                this.mViewHolder.layout_info4.setVisibility(View.GONE);
+            }
 
+        } else if (v.getId() == R.id.image_info2) {
+            if (this.mViewHolder.layout_info2.getVisibility() == View.VISIBLE) {
+                this.mViewHolder.layout_info2.setVisibility(View.GONE);
+            } else {
+                this.mViewHolder.layout_info1.setVisibility(View.GONE);
+                this.mViewHolder.layout_info2.setVisibility(View.VISIBLE);
+                this.mViewHolder.layout_info3.setVisibility(View.GONE);
+                this.mViewHolder.layout_info4.setVisibility(View.GONE);
+            }
+
+        } else if (v.getId() == R.id.image_info3) {
+            if (this.mViewHolder.layout_info3.getVisibility() == View.VISIBLE) {
+                this.mViewHolder.layout_info3.setVisibility(View.GONE);
+            } else {
+                this.mViewHolder.layout_info1.setVisibility(View.GONE);
+                this.mViewHolder.layout_info2.setVisibility(View.GONE);
+                this.mViewHolder.layout_info3.setVisibility(View.VISIBLE);
+                this.mViewHolder.layout_info4.setVisibility(View.GONE);
+            }
+
+        } else if (v.getId() == R.id.image_info4) {
+            if (this.mViewHolder.layout_info4.getVisibility() == View.VISIBLE) {
+                this.mViewHolder.layout_info4.setVisibility(View.GONE);
+            } else {
+                this.mViewHolder.layout_info1.setVisibility(View.GONE);
+                this.mViewHolder.layout_info2.setVisibility(View.GONE);
+                this.mViewHolder.layout_info3.setVisibility(View.GONE);
+                this.mViewHolder.layout_info4.setVisibility(View.VISIBLE);
+            }
         }
     }
 
