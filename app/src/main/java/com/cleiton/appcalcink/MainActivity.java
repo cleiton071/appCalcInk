@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ViewHolder mViewHolder = new ViewHolder();
+    public static int in = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.mViewHolder.layout_empty = findViewById(R.id.layout_empty);
         this.mViewHolder.layout_room = findViewById(R.id.layout_room);
         this.mViewHolder.button_add = findViewById(R.id.button_add);
+        this.mViewHolder.button_calc = findViewById(R.id.button_calc);
         this.mViewHolder.layout_wall1 = findViewById(R.id.layout_wall1);
         this.mViewHolder.image_info1 = findViewById(R.id.image_info1);
         this.mViewHolder.layout_info1 = findViewById(R.id.layout_info1);
@@ -59,29 +61,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         this.mViewHolder.button_add.setOnClickListener(this);
         this.mViewHolder.image_info1.setOnClickListener(this);
-
-        this.mViewHolder.room.getWall(0).setAltura(50.00);
-        this.mViewHolder.text_info_altura1.setText(this.mViewHolder.room.getWall(0).getAltura().toString());
+        this.mViewHolder.button_calc.setOnClickListener(this);
 
 
+        if (in == 1) {
+            this.mViewHolder.layout_empty.setVisibility(View.GONE);
+            this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
+            this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
+
+        } else if (in == 2) {
+            this.mViewHolder.layout_empty.setVisibility(View.GONE);
+            this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
+            this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
+            this.mViewHolder.layout_wall2.setVisibility(View.VISIBLE);
+
+        } else if (in == 3) {
+            this.mViewHolder.layout_empty.setVisibility(View.GONE);
+            this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
+            this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
+            this.mViewHolder.layout_wall2.setVisibility(View.VISIBLE);
+            this.mViewHolder.layout_wall3.setVisibility(View.VISIBLE);
+
+        } else if (in == 4) {
+            this.mViewHolder.layout_empty.setVisibility(View.GONE);
+            this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
+            this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
+            this.mViewHolder.layout_wall2.setVisibility(View.VISIBLE);
+            this.mViewHolder.layout_wall3.setVisibility(View.VISIBLE);
+            this.mViewHolder.layout_wall4.setVisibility(View.VISIBLE);
+            this.mViewHolder.button_add.setVisibility(View.GONE);
+            this.mViewHolder.button_calc.setVisibility(View.VISIBLE);
+        }
     }
+
 
     @Override
     public void onClick(View v) {
-        int init = 0;
 
         if (v.getId() == R.id.button_add) {
-            if (init <= 3) {
-                Intent add = new Intent(this, FormWall.class);
-                startActivity(add);
-                init++;
 
-            } else if (init >= 1 && init < 4) {
-                this.mViewHolder.layout_empty.setVisibility(View.GONE);
-                this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
-                this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
-
-            }
+            Intent add = new Intent(this, FormWall.class);
+            startActivity(add);
 
         } else if (v.getId() == R.id.image_info1) {
             if (this.mViewHolder.layout_info1.getVisibility() == View.VISIBLE) {
@@ -122,17 +142,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info3.setVisibility(View.GONE);
                 this.mViewHolder.layout_info4.setVisibility(View.VISIBLE);
             }
-        }
+
+        } else return;
     }
 
     private static class ViewHolder {
         Room room = new Room();
 
-
         RelativeLayout layout_empty;
         RelativeLayout layout_room;
 
         Button button_add;
+        Button button_calc;
 
         RelativeLayout layout_wall1;
         ImageView image_info1;

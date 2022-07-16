@@ -11,7 +11,7 @@ public class Room {
         }
     }
 
-    public Wall getWall (int i){
+    public Wall getWall(int i) {
         return walls.get(i);
     }
 }
