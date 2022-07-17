@@ -63,8 +63,6 @@ public class FormWall extends AppCompatActivity implements View.OnClickListener 
                 startActivity(save);
             }
         }
-
-
     }
 
     private static class ViewHolder {
@@ -76,12 +74,6 @@ public class FormWall extends AppCompatActivity implements View.OnClickListener 
         EditText edit_janela;
         Button button_save;
         Button button_return;
-
-    }
-
-    public static void main() {
-        Room quarto = new Room();
-
 
     }
 }

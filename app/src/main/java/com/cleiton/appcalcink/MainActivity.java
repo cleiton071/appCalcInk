@@ -61,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         this.mViewHolder.button_add.setOnClickListener(this);
         this.mViewHolder.image_info1.setOnClickListener(this);
+        this.mViewHolder.image_info2.setOnClickListener(this);
+        this.mViewHolder.image_info3.setOnClickListener(this);
+        this.mViewHolder.image_info4.setOnClickListener(this);
         this.mViewHolder.button_calc.setOnClickListener(this);
 
 
@@ -143,7 +146,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.VISIBLE);
             }
 
-        } else return;
+        } else if (v.getId() == R.id.button_calc) {
+
+        }
     }
 
     private static class ViewHolder {
