@@ -1,4 +1,4 @@
-package com.cleiton.appcalcink;
+package com.cleiton.appcalcink.model;
 
 public class Wall {
 

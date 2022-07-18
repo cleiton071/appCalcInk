@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".layout.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -281,7 +281,6 @@
 
                         <LinearLayout
                             android:id="@+id/layout_janelas2"
-
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/layout_portas2"

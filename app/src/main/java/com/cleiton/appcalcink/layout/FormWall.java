@@ -1,9 +1,10 @@
-package com.cleiton.appcalcink;
+package com.cleiton.appcalcink.layout;
 
-import static com.cleiton.appcalcink.MainActivity.in;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.gson.Gson;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,14 +13,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cleiton.appcalcink.R;
+import com.cleiton.appcalcink.data.Data;
+import com.cleiton.appcalcink.layout.MainActivity;
+import com.cleiton.appcalcink.model.Wall;
+
 public class FormWall extends AppCompatActivity implements View.OnClickListener {
 
     ViewHolder mViewholder = new ViewHolder();
+    private Data mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_wall);
+
+        this.mData = new Data(this);
 
         this.mViewholder.text_title = findViewById(R.id.text_title);
         this.mViewholder.edit_altura = findViewById(R.id.edit_altura);
@@ -36,8 +45,10 @@ public class FormWall extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.button_return) {
-            Intent voltar = new Intent(this, MainActivity.class);
-            startActivity(voltar);
+            Intent voltar = new Intent();
+            this.setResult(Activity.RESULT_CANCELED, voltar);
+            this.finish();
+
 
         } else if (v.getId() == R.id.button_save) {
 
@@ -47,20 +58,24 @@ public class FormWall extends AppCompatActivity implements View.OnClickListener 
             String janela = this.mViewholder.edit_janela.getText().toString();
 
             if ("".equals(altura) || "".equals(largura) || "".equals(porta) || "".equals(janela)) {
-                Toast.makeText(this, "preencha os dados!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "preencha os campos!", Toast.LENGTH_LONG).show();
+
 
             } else {
+                Intent resultIntent = new Intent();
+                Gson gson = new Gson();
+
                 Double vAlt = Double.valueOf(altura);
                 Double vLarg = Double.valueOf(largura);
                 Integer vPor = Integer.valueOf(porta);
                 Integer vJan = Integer.valueOf(janela);
 
-                new Wall(vAlt, vLarg, vPor, vJan);
+                Wall parede = new Wall(vAlt, vLarg, vPor, vJan);
+                String gsonAux = gson.toJson(parede);
 
-                in += 1;
-
-                Intent save = new Intent(this, MainActivity.class);
-                startActivity(save);
+                this.mData.storeString("Wall_"+ this.mData.getNumWalls(), gsonAux);
+                this.setResult(Activity.RESULT_OK, resultIntent);
+                this.finish();
             }
         }
     }

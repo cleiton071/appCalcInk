@@ -1,27 +1,37 @@
-package com.cleiton.appcalcink;
+package com.cleiton.appcalcink.layout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.cleiton.appcalcink.R;
+import com.cleiton.appcalcink.data.Data;
+import com.cleiton.appcalcink.model.Wall;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ViewHolder mViewHolder = new ViewHolder();
-    public static int in = 0;
+    private Data mdata;
+//    public static int in = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mViewHolder.room.init();
+        this.mdata = new Data(this);
+
+        this.mdata.setNumWalls("0");
+
         this.mViewHolder.layout_empty = findViewById(R.id.layout_empty);
         this.mViewHolder.layout_room = findViewById(R.id.layout_room);
         this.mViewHolder.button_add = findViewById(R.id.button_add);
@@ -67,25 +77,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.mViewHolder.button_calc.setOnClickListener(this);
 
 
-        if (in == 1) {
+        if (mdata.getNumWalls().equals("1")) {
             this.mViewHolder.layout_empty.setVisibility(View.GONE);
             this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
             this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
 
-        } else if (in == 2) {
+        } else if (mdata.getNumWalls().equals("2")) {
             this.mViewHolder.layout_empty.setVisibility(View.GONE);
             this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
             this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
             this.mViewHolder.layout_wall2.setVisibility(View.VISIBLE);
 
-        } else if (in == 3) {
+        } else if (mdata.getNumWalls().equals("3")) {
             this.mViewHolder.layout_empty.setVisibility(View.GONE);
             this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
             this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
             this.mViewHolder.layout_wall2.setVisibility(View.VISIBLE);
             this.mViewHolder.layout_wall3.setVisibility(View.VISIBLE);
 
-        } else if (in == 4) {
+        } else if (mdata.getNumWalls().equals("4")) {
             this.mViewHolder.layout_empty.setVisibility(View.GONE);
             this.mViewHolder.layout_room.setVisibility(View.VISIBLE);
             this.mViewHolder.layout_wall1.setVisibility(View.VISIBLE);
@@ -104,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.button_add) {
 
             Intent add = new Intent(this, FormWall.class);
-            startActivity(add);
+            startActivityForResult(add, 37);
 
         } else if (v.getId() == R.id.image_info1) {
             if (this.mViewHolder.layout_info1.getVisibility() == View.VISIBLE) {
@@ -151,9 +161,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private static class ViewHolder {
-        Room room = new Room();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 37) {
+            if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(this, "dados salvos!", Toast.LENGTH_LONG).show();
+
+                Gson gson = new Gson();
+                String info_1 = this.mdata.getStoreString("wall_0");
+                Wall parede_1 = gson.fromJson(info_1, Wall.class);
+                this.mViewHolder.text_info_altura1.setText(String.format("%.2f",parede_1.getAltura()));
+
+            }else if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(this, "página anterior", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private static class ViewHolder {
         RelativeLayout layout_empty;
         RelativeLayout layout_room;
 
