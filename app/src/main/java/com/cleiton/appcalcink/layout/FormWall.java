@@ -2,6 +2,7 @@ package com.cleiton.appcalcink.layout;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 
 import android.app.Activity;
@@ -15,7 +16,6 @@ import android.widget.Toast;
 
 import com.cleiton.appcalcink.R;
 import com.cleiton.appcalcink.data.Data;
-import com.cleiton.appcalcink.layout.MainActivity;
 import com.cleiton.appcalcink.model.Wall;
 
 public class FormWall extends AppCompatActivity implements View.OnClickListener {
@@ -63,6 +63,7 @@ public class FormWall extends AppCompatActivity implements View.OnClickListener 
 
             } else {
                 Intent resultIntent = new Intent();
+
                 Gson gson = new Gson();
 
                 Double vAlt = Double.valueOf(altura);
