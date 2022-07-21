@@ -32,8 +32,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         this.mViewHolder.layout_empty = findViewById(R.id.layout_empty);
         this.mViewHolder.layout_room = findViewById(R.id.layout_room);
+        this.mViewHolder.layout_modal = findViewById(R.id.layout_modal);
         this.mViewHolder.button_add = findViewById(R.id.button_add);
         this.mViewHolder.button_calc = findViewById(R.id.button_calc);
+        this.mViewHolder.button_close_modal = findViewById(R.id.button_close_modal);
         this.mViewHolder.layout_wall1 = findViewById(R.id.layout_wall1);
         this.mViewHolder.image_info1 = findViewById(R.id.image_info1);
         this.mViewHolder.layout_info1 = findViewById(R.id.layout_info1);
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.mViewHolder.image_info3.setOnClickListener(this);
         this.mViewHolder.image_info4.setOnClickListener(this);
         this.mViewHolder.button_calc.setOnClickListener(this);
+        this.mViewHolder.button_close_modal.setOnClickListener(this);
     }
 
     @Override
@@ -82,7 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent add = new Intent(this, FormWall.class);
             startActivityForResult(add, 37);
 
-        } else if (v.getId() == R.id.image_info1) {
+        }
+        else if (v.getId() == R.id.image_info1) {
             if (this.mViewHolder.layout_info1.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info1.setVisibility(View.GONE);
             } else {
@@ -92,7 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             }
 
-        } else if (v.getId() == R.id.image_info2) {
+        }
+        else if (v.getId() == R.id.image_info2) {
             if (this.mViewHolder.layout_info2.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info2.setVisibility(View.GONE);
             } else {
@@ -102,7 +107,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             }
 
-        } else if (v.getId() == R.id.image_info3) {
+        }
+        else if (v.getId() == R.id.image_info3) {
             if (this.mViewHolder.layout_info3.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info3.setVisibility(View.GONE);
             } else {
@@ -112,7 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             }
 
-        } else if (v.getId() == R.id.image_info4) {
+        }
+        else if (v.getId() == R.id.image_info4) {
             if (this.mViewHolder.layout_info4.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             } else {
@@ -122,49 +129,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.VISIBLE);
             }
 
-        } else if (v.getId() == R.id.button_calc) {
-            this.Calcular();
+        }
+        else if (v.getId() == R.id.button_calc) {
+            Gson gson = new Gson();
+
+            String primeira = this.mdata.getStoreString("Wall_0");
+            Wall p1 = gson.fromJson(primeira, Wall.class);
+
+            String segunda = this.mdata.getStoreString("Wall_1");
+            Wall p2 = gson.fromJson(segunda, Wall.class);
+
+            String terceira = this.mdata.getStoreString("Wall_2");
+            Wall p3 = gson.fromJson(terceira, Wall.class);
+
+            String quarta = this.mdata.getStoreString("Wall_3");
+            Wall p4 = gson.fromJson(quarta, Wall.class);
+
+            Consumo_tinta(p1, p2, p3, p4);
+
+        }
+        else {
+            this.mViewHolder.layout_modal.setVisibility(View.GONE);
         }
     }
-
-    public void Calcular() {
-
-    }
-
-    public boolean Area_parede(Double altura, Double largura) {
-        Double area = altura * largura;
-
-        if (area >= 1 && area <= 15) {
-            return true;
-
-        } else return false;
-    }
-
-    public boolean Proporcao_area(Wall wall) {
-        Double areaParede = wall.getAltura() * wall.getLargura();
-        Double areaPorta = 1.52 * wall.getNporta();
-        Double areaJanela = 2.40 * wall.getNjanela();
-
-        if ((areaJanela + areaPorta) > (areaParede / 2)) {
-            return false;
-
-        } else return true;
-    }
-
-    public boolean Altura_permitida(Wall wall) {
-        if ((wall.getNporta() >= 0 && (wall.getAltura() - 0.30) >= 1.9) || wall.getNporta() == 0) {
-            return true;
-
-        } else return false;
-    }
-
-    public void Consumo_tinta(Wall wall_1, Wall wall_2, Wall wall_3, Wall wall_4) {
-        Double areaTotal = ((wall_1.getAltura() * wall_1.getLargura()) + (wall_2.getAltura() * wall_2.getLargura()) + (wall_3.getAltura() * wall_3.getLargura()) + (wall_4.getAltura() * wall_4.getLargura()));
-        Double qtdTintaNec = areaTotal / 5.00;
-        Double[] latasTinta = {18.00, 3.60, 2.50, 0.50};
-
-    }
-
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -237,12 +224,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void Consumo_tinta(Wall wall_1, Wall wall_2, Wall wall_3, Wall wall_4) {
+        Double areaTotal = (wall_1.getAltura() * wall_1.getLargura());
+        areaTotal += (wall_2.getAltura() * wall_2.getLargura());
+        areaTotal += (wall_3.getAltura() * wall_3.getLargura());
+        areaTotal += (wall_4.getAltura() * wall_4.getLargura());
+
+        Double qtdTintaNec = areaTotal / 5.00;
+        Double[] latasTinta = {18.00, 3.60, 2.50, 0.50};
+        Integer[] latanec = {0, 0, 0, 0};
+        Double qtdAtual = qtdTintaNec;
+        Integer i = 0;
+
+        while (i <= 3) {
+            if (qtdAtual >= latasTinta[i]){
+                qtdAtual = qtdAtual - latasTinta[i];
+                latanec[i]++;
+            }else i++;
+        }
+
+//        precisa por um set text no layout final de resultados (modal)
+    }
+
     private static class ViewHolder {
         RelativeLayout layout_empty;
         RelativeLayout layout_room;
 
         Button button_add;
         Button button_calc;
+        Button button_close_modal;
 
         RelativeLayout layout_wall1;
         ImageView image_info1;
@@ -275,6 +285,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView text_qtd_janelas4;
         TextView text_info_altura4;
         TextView text_info_largura4;
+
+        RelativeLayout layout_modal;
 
     }
 }

@@ -813,7 +813,7 @@
             android:paddingTop="100dp"
             android:paddingRight="30dp"
             android:paddingBottom="100dp"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -846,6 +846,7 @@
                         android:layout_weight="1">
 
                         <Button
+                            android:id="@+id/button_close_modal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_alignParentBottom="true"
