@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.mdata.setNumWalls("0");
 
         this.mViewHolder.layout_empty = findViewById(R.id.layout_empty);
+
         this.mViewHolder.layout_room = findViewById(R.id.layout_room);
-        this.mViewHolder.layout_modal = findViewById(R.id.layout_modal);
         this.mViewHolder.button_add = findViewById(R.id.button_add);
         this.mViewHolder.button_calc = findViewById(R.id.button_calc);
-        this.mViewHolder.button_close_modal = findViewById(R.id.button_close_modal);
+
         this.mViewHolder.layout_wall1 = findViewById(R.id.layout_wall1);
         this.mViewHolder.image_info1 = findViewById(R.id.image_info1);
         this.mViewHolder.layout_info1 = findViewById(R.id.layout_info1);
@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.mViewHolder.text_info_altura4 = findViewById(R.id.text_info_altura4);
         this.mViewHolder.text_info_largura4 = findViewById(R.id.text_info_largura4);
 
+        this.mViewHolder.layout_modal = findViewById(R.id.layout_modal);
+        this.mViewHolder.button_close_modal = findViewById(R.id.button_close_modal);
+        this.mViewHolder.text_modal1 = findViewById(R.id.text_modal1);
+        this.mViewHolder.text_modalResult = findViewById(R.id.text_modalResult);
 
         this.mViewHolder.button_add.setOnClickListener(this);
         this.mViewHolder.image_info1.setOnClickListener(this);
@@ -85,8 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent add = new Intent(this, FormWall.class);
             startActivityForResult(add, 37);
 
-        }
-        else if (v.getId() == R.id.image_info1) {
+        } else if (v.getId() == R.id.image_info1) {
             if (this.mViewHolder.layout_info1.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info1.setVisibility(View.GONE);
             } else {
@@ -96,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             }
 
-        }
-        else if (v.getId() == R.id.image_info2) {
+        } else if (v.getId() == R.id.image_info2) {
             if (this.mViewHolder.layout_info2.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info2.setVisibility(View.GONE);
             } else {
@@ -107,8 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             }
 
-        }
-        else if (v.getId() == R.id.image_info3) {
+        } else if (v.getId() == R.id.image_info3) {
             if (this.mViewHolder.layout_info3.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info3.setVisibility(View.GONE);
             } else {
@@ -118,8 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             }
 
-        }
-        else if (v.getId() == R.id.image_info4) {
+        } else if (v.getId() == R.id.image_info4) {
             if (this.mViewHolder.layout_info4.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             } else {
@@ -129,8 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.VISIBLE);
             }
 
-        }
-        else if (v.getId() == R.id.button_calc) {
+        } else if (v.getId() == R.id.button_calc) {
             Gson gson = new Gson();
 
             String primeira = this.mdata.getStoreString("Wall_0");
@@ -147,8 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Consumo_tinta(p1, p2, p3, p4);
 
-        }
-        else {
+        } else {
             this.mViewHolder.layout_modal.setVisibility(View.GONE);
         }
     }
@@ -237,13 +235,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Integer i = 0;
 
         while (i <= 3) {
-            if (qtdAtual >= latasTinta[i]){
+            if (qtdAtual >= latasTinta[i]) {
                 qtdAtual = qtdAtual - latasTinta[i];
                 latanec[i]++;
-            }else i++;
+            } else i++;
         }
+        while (qtdAtual >= 0.01) {
+            qtdAtual = qtdAtual - latasTinta[3];
+            latanec[3]++;
+        }
+        Integer l18 = latanec[0];
+        Integer l36 = latanec[1];
+        Integer l25 = latanec[2];
+        Integer l05 = latanec[3];
 
-//        precisa por um set text no layout final de resultados (modal)
+        this.mViewHolder.layout_modal.setVisibility(View.VISIBLE);
     }
 
     private static class ViewHolder {
@@ -287,6 +293,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView text_info_largura4;
 
         RelativeLayout layout_modal;
+        TextView text_modal1;
+        TextView text_modalResult;
 
     }
 }
