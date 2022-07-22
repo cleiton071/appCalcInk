@@ -148,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } else {
             this.mViewHolder.layout_modal.setVisibility(View.GONE);
+            this.mdata.setNumWalls("0");
+            Replay();
         }
     }
 
@@ -228,6 +230,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         areaTotal += (wall_3.getAltura() * wall_3.getLargura());
         areaTotal += (wall_4.getAltura() * wall_4.getLargura());
 
+        areaTotal -= ((wall_1.getNporta() * 1.52) + (wall_1.getNjanela() * 2.4));
+        areaTotal -= ((wall_2.getNporta() * 1.52) + (wall_2.getNjanela() * 2.4));
+        areaTotal -= ((wall_3.getNporta() * 1.52) + (wall_3.getNjanela() * 2.4));
+        areaTotal -= ((wall_4.getNporta() * 1.52) + (wall_4.getNjanela() * 2.4));
+
         Double qtdTintaNec = areaTotal / 5.00;
         Double[] latasTinta = {18.00, 3.60, 2.50, 0.50};
         Integer[] latanec = {0, 0, 0, 0};
@@ -249,7 +256,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Integer l25 = latanec[2];
         Integer l05 = latanec[3];
 
+        this.mViewHolder.text_modalResult.setText(String.format("%d lata(s) de 18L +  %d lata(s) de 3,6L +  %d lata(s) de 2,5L +  %d lata(s) de 0,5L", l18, l36, l25 ,l05));
+
         this.mViewHolder.layout_modal.setVisibility(View.VISIBLE);
+    }
+
+    public void Replay () {
+        if (this.mdata.getNumWalls() == "0"){
+            this.mViewHolder.layout_room.setVisibility(View.GONE);
+            this.mViewHolder.button_calc.setVisibility(View.GONE);
+
+            this.mViewHolder.layout_wall1.setVisibility(View.GONE);
+            this.mViewHolder.layout_wall2.setVisibility(View.GONE);
+            this.mViewHolder.layout_wall3.setVisibility(View.GONE);
+            this.mViewHolder.layout_wall4.setVisibility(View.GONE);
+
+            this.mViewHolder.layout_empty.setVisibility(View.VISIBLE);
+            this.mViewHolder.button_add.setVisibility(View.VISIBLE);
+
+        }
+
+
     }
 
     private static class ViewHolder {

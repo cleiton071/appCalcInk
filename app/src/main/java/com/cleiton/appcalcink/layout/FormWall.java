@@ -69,21 +69,23 @@ public class FormWall extends AppCompatActivity implements View.OnClickListener 
                 if (Area_parede(vAlt, vLarg) == true) {
                     Wall parede = new Wall(vAlt, vLarg, vPor, vJan);
                     if (Proporcao_area(parede) == true) {
+                        if (Altura_permitida(parede) == true) {
+                            Intent resultIntent = new Intent();
+                            Gson gson = new Gson();
+                            String gsonAux = gson.toJson(parede);
+
+                            this.mData.storeString("Wall_" + this.mData.getNumWalls(), gsonAux);
+                            this.setResult(Activity.RESULT_OK, resultIntent);
+                            this.finish();
+
+                        } else {
+                            Toast.makeText(this, "esta parede n tem altura para a porta!", Toast.LENGTH_LONG).show();
+                        }
 
                     } else {
                         Toast.makeText(this, "esta parede não tem espaço para porta / janela!", Toast.LENGTH_LONG).show();
                     }
-                    if (Altura_permitida(parede) == true) {
-                        Intent resultIntent = new Intent();
-                        Gson gson = new Gson();
-                        String gsonAux = gson.toJson(parede);
 
-                        this.mData.storeString("Wall_" + this.mData.getNumWalls(), gsonAux);
-                        this.setResult(Activity.RESULT_OK, resultIntent);
-                        this.finish();
-                    } else {
-                        Toast.makeText(this, "esta parede n tem altura para a porta!", Toast.LENGTH_LONG).show();
-                    }
                 } else {
                     Toast.makeText(this, "a parede não pode ter mais que 15 ou menos que 1 m2!", Toast.LENGTH_LONG).show();
 
