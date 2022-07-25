@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.mdata.setNumWalls("0");
 
         this.mViewHolder.layout_empty = findViewById(R.id.layout_empty);
-
         this.mViewHolder.layout_room = findViewById(R.id.layout_room);
         this.mViewHolder.button_add = findViewById(R.id.button_add);
         this.mViewHolder.button_calc = findViewById(R.id.button_calc);
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         this.mViewHolder.layout_modal = findViewById(R.id.layout_modal);
         this.mViewHolder.button_close_modal = findViewById(R.id.button_close_modal);
-        this.mViewHolder.text_modal1 = findViewById(R.id.text_modal1);
         this.mViewHolder.text_modalResult = findViewById(R.id.text_modalResult);
 
         this.mViewHolder.button_add.setOnClickListener(this);
@@ -89,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent add = new Intent(this, FormWall.class);
             startActivityForResult(add, 37);
 
-        } else if (v.getId() == R.id.image_info1) {
+        }
+        else if (v.getId() == R.id.image_info1) {
             if (this.mViewHolder.layout_info1.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info1.setVisibility(View.GONE);
             } else {
@@ -99,7 +98,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             }
 
-        } else if (v.getId() == R.id.image_info2) {
+        }
+        else if (v.getId() == R.id.image_info2) {
             if (this.mViewHolder.layout_info2.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info2.setVisibility(View.GONE);
             } else {
@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             }
 
-        } else if (v.getId() == R.id.image_info3) {
+        }
+        else if (v.getId() == R.id.image_info3) {
             if (this.mViewHolder.layout_info3.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info3.setVisibility(View.GONE);
             } else {
@@ -119,7 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             }
 
-        } else if (v.getId() == R.id.image_info4) {
+        }
+        else if (v.getId() == R.id.image_info4) {
             if (this.mViewHolder.layout_info4.getVisibility() == View.VISIBLE) {
                 this.mViewHolder.layout_info4.setVisibility(View.GONE);
             } else {
@@ -129,7 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.mViewHolder.layout_info4.setVisibility(View.VISIBLE);
             }
 
-        } else if (v.getId() == R.id.button_calc) {
+        }
+        else if (v.getId() == R.id.button_calc) {
             Gson gson = new Gson();
 
             String primeira = this.mdata.getStoreString("Wall_0");
@@ -256,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Integer l25 = latanec[2];
         Integer l05 = latanec[3];
 
-        this.mViewHolder.text_modalResult.setText(String.format("%d lata(s) de 18L +  %d lata(s) de 3,6L +  %d lata(s) de 2,5L +  %d lata(s) de 0,5L", l18, l36, l25 ,l05));
+        this.mViewHolder.text_modalResult.setText(String.format("%d lata(s) de 18L\n%d lata(s) de 3,6L\n%d lata(s) de 2,5L\n%d lata(s) de 0,5L", l18, l36, l25 ,l05));
 
         this.mViewHolder.layout_modal.setVisibility(View.VISIBLE);
     }
@@ -320,7 +323,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView text_info_largura4;
 
         RelativeLayout layout_modal;
-        TextView text_modal1;
         TextView text_modalResult;
 
     }

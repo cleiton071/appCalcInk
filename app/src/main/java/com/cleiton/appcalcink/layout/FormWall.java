@@ -38,8 +38,13 @@ public class FormWall extends AppCompatActivity implements View.OnClickListener 
         this.mViewholder.button_save = findViewById(R.id.button_save);
         this.mViewholder.button_return = findViewById(R.id.button_return);
 
+        int numWall = Integer.parseInt(this.mData.getNumWalls()) + 1;
+        String text = "parede " + numWall;
+        this.mViewholder.text_title.setText(text);
+
         this.mViewholder.button_save.setOnClickListener(this);
         this.mViewholder.button_return.setOnClickListener(this);
+
     }
 
     @Override
@@ -79,7 +84,7 @@ public class FormWall extends AppCompatActivity implements View.OnClickListener 
                             this.finish();
 
                         } else {
-                            Toast.makeText(this, "esta parede n tem altura para a porta!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "esta parede não tem altura para a porta!", Toast.LENGTH_LONG).show();
                         }
 
                     } else {
